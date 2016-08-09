@@ -5,6 +5,7 @@
  */
 package resouces;
 
+import data.Student;
 import javax.ws.rs.Produces;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
@@ -54,9 +55,12 @@ public class GenericResource {
     
     @GET
     @Path("/extra/{thePrimaryKey}")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String get123(@PathParam("thePrimaryKey") String pk) {
-        return String.format("Hello this is %s!", pk);
+    @Produces(MediaType.APPLICATION_XML)
+    public Student get123(@PathParam("thePrimaryKey") String pk) {
+        Student rv = new Student();
+        rv.name = "Fred at primary key " + pk;
+        rv.grade = "A++";
+        return rv;
     }
 
 }
