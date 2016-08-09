@@ -6,6 +6,7 @@
 package resouces;
 
 import data.Student;
+import java.util.List;
 import javax.ws.rs.Produces;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
@@ -14,7 +15,10 @@ import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.PathSegment;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * REST Web Service
@@ -63,4 +67,21 @@ public class GenericResource {
         return rv;
     }
 
+    @GET
+    @Path("/extra/{id}-{idx: \\d+}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getXandY(@PathParam("id")String id, @PathParam("idx") int idx) {
+        return String.format("getXandY, id = %s, idx = %d\n", id, idx);
+    }
+    
+    @GET
+    @Path("/recursive/{id: [a-zA-Z0-9/]+}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getRecurse(@PathParam("id") String id, @Context UriInfo uriInfo) {
+        List<PathSegment> lps = uriInfo.getPathSegments();
+        for (PathSegment ps : lps) {
+            System.out.println("> " + ps);
+        }
+        return "recursive path is " + id;
+    }
 }
