@@ -59,7 +59,7 @@ public class GenericResource {
     
     @GET
     @Path("/extra/{thePrimaryKey}")
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces({MediaType.APPLICATION_JSON})
     public Student get123(@PathParam("thePrimaryKey") String pk) {
         Student rv = new Student();
         rv.name = "Fred at primary key " + pk;
